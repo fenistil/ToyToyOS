@@ -1,1 +1,9 @@
-test
+ToyToyOS
+====================
+
+ToyToyOS (T2OS) is an experimental Operatin System written mainly in C.
+Among it's goals is to make the author fully understand the Booting
+Process of a i386 compatible computer as well to be able to programm
+the most basic component of an OS (the kernel). 
+The project will not replace any of the existing OSes out there, the goal
+is merely to make the author understand things.
