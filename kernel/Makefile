@@ -5,7 +5,7 @@ OBJS=kernel.o boot.o
 all: kernel.bin
 
 kernel.bin: $(OBJS)
-	LD -T linker.ld $(OBJS) -o $@
+	ld -T linker.ld $(OBJS) -o $@
 
 kernel.o: kernel.c
 	$(CC) $(CFLAGS) -o $@ $<
