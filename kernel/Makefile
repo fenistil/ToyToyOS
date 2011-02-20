@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-c -g3 -Wall -Wextra -Werror -nostdlib -nostartfiles -nodefaultlibs
-OBJS=kernel.o boot.o common.o
+OBJS=kernel.o boot.o common.o scrn.o
 
 all: kernel.bin
 
@@ -15,7 +15,9 @@ boot.o: boot.s
 
 common.o: common.c
 	$(CC) $(CFLAGS) -o $@ $<
-	
+
+scrn.o: scrn.c
+	$(CC) $(CFLAGS) -o $@ $<
 
 clean:
 	rm `ls *.o`
