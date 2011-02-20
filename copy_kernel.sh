@@ -1,5 +1,5 @@
 #!/bin/bash
 
-mount floppy.img floppy_mount/ -t ext2 -o loop
+sudo mount floppy.img floppy_mount/ -t ext2 -o loop
 cp kernel/kernel.bin floppy_mount/boot/
-umount floppy_mount/
+sudo umount floppy_mount/
