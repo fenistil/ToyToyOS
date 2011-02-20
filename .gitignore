@@ -1,4 +1,5 @@
 floppy_mount
 floppy_mount/*
-kernel/*.o
+kernel/objs/*.o
 kernel/*.bin
+kernel/.*

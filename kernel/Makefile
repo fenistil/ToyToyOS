@@ -1,27 +1,27 @@
 CC=gcc
-CFLAGS=-c -g3 -Wall -Wextra -Werror -nostdlib -nostartfiles -nodefaultlibs
-OBJS=kernel.o boot.o common.o scrn.o
+CFLAGS=-c -g3 -Wall -Wextra -Werror -nostdlib -nostartfiles -nodefaultlibs -I./include
+
+OBJ_DIR=objs/
+CSOURCES=$(wildcard *.c)
+OBJS=$(addprefix $(OBJ_DIR), $(subst .c,.o,$(CSOURCES)))
 
 all: kernel.bin
 
-kernel.bin: $(OBJS)
-	ld -T linker.ld $(OBJS) -o $@
+kernel.bin: $(OBJS) boot.o
+	ld -T linker.ld $(OBJS) $(OBJ_DIR)boot.o -o $@
 
-kernel.o: kernel.c
-	$(CC) $(CFLAGS) -o $@ $<
+$(OBJS): $(CSOURCES)
+	$(CC) $(CFLAGS) -o $@ $(patsubst %.o,%.c,$(subst $(OBJ_DIR),,$@))
 
 boot.o: boot.s
-	nasm -f elf -o $@ $<
+	nasm -f elf -o $(OBJ_DIR)$@ $<
 
-common.o: common.c
-	$(CC) $(CFLAGS) -o $@ $<
-
-scrn.o: scrn.c
-	$(CC) $(CFLAGS) -o $@ $<
-
-clean:
-	rm `ls *.o`
+clean:	
+	rm $(OBJ_DIR)*.o	
 	rm `ls kernel.bin`
 
 run:
 	bochs -q -f `pwd`/../bochrc.txt
+	
+test:
+	echo $(patsubst %.o,%.c,$(subst $(OBJ_DIR),,$(OBJS)))

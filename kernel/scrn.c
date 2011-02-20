@@ -1,5 +1,9 @@
+#include "common.h"
 #include "scrn.h"
 
+u32int scrn_cursor_x;
+u32int scrn_cursor_y;
+u32int scrn_page;
 
 void scrn_init() {
 	scrn_cursor_x = 0;
@@ -20,7 +24,7 @@ u32int scrn_puts(s8int *str) {
 	return 0;
 }
 
-void scrn_scroll(s18int page) {
+void scrn_scroll(s8int page) {
 	page = page;
 }
 

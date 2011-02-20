@@ -1,3 +1,6 @@
+#include "common.h"
+#include "scrn.h"
+
 int kmain() {
 	/* just to see if we were actually able to boot up */
 	short *vidmem = (short *)0xB8000;
