@@ -1,0 +1,4 @@
+floppy_mount
+floppy_mount/*
+kernel/*.o
+kernel/*.bin
