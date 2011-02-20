@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-c -g3 -Wall -Wextra -Werror -nostdlib -nostartiles -nodefaultlibs
+CFLAGS=-c -g3 -Wall -Wextra -Werror -nostdlib -nostartfiles -nodefaultlibs
 OBJS=kernel.o boot.o
 
 all: kernel.bin
