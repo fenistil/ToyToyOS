@@ -1,0 +1,5 @@
+#BOCHS CONFIG FILE
+floppya: 1_44=/dev/loop0, status=inserted
+boot: a
+clock: sync=realtime
+cpu: ips=250000
