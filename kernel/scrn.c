@@ -59,8 +59,10 @@ void scrn_puts(s8int *str) {
 }
 
 void scrn_scroll() {
-	if ( 1 = 1 )
-		;
+	int a,b = 2;
+	if ( 1 == 1 ) {
+		a = b;
+	}
 
 }
 
