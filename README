@@ -7,3 +7,19 @@ Process of a i386 compatible computer as well to be able to programm
 the most basic component of an OS (the kernel). 
 The project will not replace any of the existing OSes out there, the goal
 is merely to make the author understand things.
+
+
+Usage:
+====================
+In order to boot up T2OS, you'll need a bunch of things. 
+1) Virtual Computer (I used Bochs)
+2) Linux
+
+Installing Bochs on Debian based Linuxes:
+===========================================
+apt-get install bochs #(as root)
+
+Booting up Bochs:
+=================
+bochs -q
+Taken that bochsrc.txt file is inside your current directory with floppy.img
