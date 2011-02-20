@@ -41,7 +41,7 @@ void scrn_putc(s8int c) {
 		}
 		break;
 	}
-	scrn_scroll();
+	//scrn_scroll();
 	//scrn_move_cursor();
 }
 
@@ -59,10 +59,6 @@ void scrn_puts(s8int *str) {
 }
 
 void scrn_scroll() {
-	int a,b = 2;
-	if ( 1 == 1 ) {
-		a = b;
-	}
 
 }
 
