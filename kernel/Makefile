@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-c -g3 -Wall -Wextra -Werror -nostdlib -nostartfiles -nodefaultlibs -I./include
+CFLAGS=-c -g -Wall -Wextra -Werror -nostdlib -nostartfiles -nodefaultlibs -I./include
 
 OBJ_DIR=objs/
 CSOURCES=$(wildcard *.c)
