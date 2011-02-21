@@ -9,6 +9,7 @@ typedef short s16int_t;
 typedef unsigned char u8int_t;
 typedef char s8int_t;
 
+u32int_t *kmemsetww(u32int_t *, s32int_t , s32int_t );
 u16int_t *kmemsetw(u16int_t *, s16int_t, s32int_t);
 u8int_t *kmemset(u8int_t *, s8int_t, s32int_t);
 u8int_t *kmemcpy(u8int_t *, u8int_t *, s32int_t);

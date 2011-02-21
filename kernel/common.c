@@ -16,6 +16,13 @@ u16int_t inw(u16int_t port) {
 	return ret;
 }
 
+u32int_t *kmemsetww(u32int_t *dest, s32int_t val, s32int_t times) {
+	s32int_t i;
+	for (i = 0; i < times; dest[i] = val, i++)
+		;
+	return dest;
+}
+
 u16int_t *kmemsetw(u16int_t *dest, s16int_t val, s32int_t times) {
 	s32int_t i;
 	for (i = 0; i < times; dest[i] = val, i++)

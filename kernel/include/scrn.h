@@ -10,16 +10,11 @@
 
 #define VIDEO_MEMORY (s16int_t *)0xB8000;
 
-u32int_t scrn_cursor_x;
-u32int_t scrn_cursor_y;
-u8int_t scrn_color;
-
 void scrn_init(void);
 void scrn_putc(s8int_t);
 void scrn_clear(void);
 void scrn_puts(s8int_t *);
-void scrn_scroll(void);
-void scrn_move_cursor(void);
 void scrn_set_textcolor(s8int_t, s8int_t);
+void scrn_put_dec(s32int_t);
 
 #endif

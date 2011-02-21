@@ -7,13 +7,16 @@ OBJS=$(addprefix $(OBJ_DIR), $(subst .c,.o,$(CSOURCES)))
 
 all: kernel.bin
 
-kernel.bin: $(OBJS) boot.o
-	ld -T linker.ld $(OBJS) $(OBJ_DIR)boot.o -o $@
+kernel.bin: $(OBJS) boot.o descriptors_asm.o
+	ld -T linker.ld $(OBJS) $(OBJ_DIR)boot.o $(OBJ_DIR)descriptors_asm.o -o $@
 
 $(OBJS): $(CSOURCES)
 	$(CC) $(CFLAGS) -o $@ $(patsubst %.o,%.c,$(subst $(OBJ_DIR),,$@))
 
 boot.o: boot.s
+	nasm -f elf -o $(OBJ_DIR)$@ $<
+
+descriptors_asm.o: descriptors_asm.s
 	nasm -f elf -o $(OBJ_DIR)$@ $<
 
 clean:	

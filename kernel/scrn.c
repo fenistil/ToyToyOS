@@ -1,10 +1,13 @@
 #include "common.h"
 #include "scrn.h"
 
-u32int_t scrn_cursor_x;
-u32int_t scrn_cursor_y;
-u32int_t scrn_page;
-u8int_t scrn_color;
+static u32int_t scrn_cursor_x;
+static u32int_t scrn_cursor_y;
+static u32int_t scrn_page;
+static u8int_t scrn_color;
+
+/*inline void scrn_move_cursor(void);
+ inline void scrn_scroll(void);*/
 
 void scrn_move_cursor(void) {
 	u16int_t cursorLocation = scrn_cursor_y * 80 + scrn_cursor_x;
@@ -23,22 +26,20 @@ void scrn_init() {
 }
 
 void scrn_scroll(void) {
-	/*	s32int i;
-		u16int blank = ' ' | 0x0F << 8;
-		s16int *vid = VIDEO_MEMORY;
-		if (scrn_cursor_y >= 25) {*/
-	/*		scrn_putc('A');
-			for (i = 0; i < 24 * 80; i++) {
-				vid[i] = vid[i + 80];
-			}
-			for (i = 24 * 80; i < 25 * 80; i++) {
-				vid[i] = blank;
-			}
-			scrn_cursor_y = 24;
-			scrn_cursor_x = 0;
-		} else	{
-			scrn_putc('N');
-		}*/
+	s32int_t i;
+	u16int_t blank = 0;
+	s16int_t *video;
+	video = VIDEO_MEMORY;
+	if (scrn_cursor_y >= 25) {
+		for (i = 0; i < 24 * 80; i++) {
+			video[i] = video[i + 80];
+		}
+		for (i = 24 * 80; i < 25 * 80; i++) {
+			video[i] = blank;
+		}
+		scrn_cursor_y = 24;
+		scrn_cursor_x = 0;
+	}
 }
 
 void scrn_putc(s8int_t c) {
@@ -47,6 +48,7 @@ void scrn_putc(s8int_t c) {
 	switch (c) {
 	case '\n':
 		scrn_cursor_y++;
+		scrn_cursor_x = 0;
 		break;
 	case '\t':
 		if (scrn_cursor_x + 4 > 78) {
@@ -69,8 +71,8 @@ void scrn_putc(s8int_t c) {
 		}
 		break;
 	}
-	//scrn_scroll();
-	//scrn_move_cursor();
+	scrn_scroll();
+	scrn_move_cursor();
 }
 
 void scrn_clear(void) {
@@ -79,7 +81,7 @@ void scrn_clear(void) {
 }
 
 void scrn_puts(s8int_t *str) {
-	int i;
+	u32int_t i = 0;
 	while (str[i] != '\0') {
 		scrn_putc(str[i]);
 		i++;
@@ -88,4 +90,18 @@ void scrn_puts(s8int_t *str) {
 
 void scrn_set_textcolor(s8int_t bg, s8int_t fg) {
 	scrn_color = bg << 4 | fg;
+}
+
+void scrn_put_dec(s32int_t dec) {
+	s8int_t digits[10];
+	s32int_t i;
+	for (i = 0; i < 10; i++) {
+		digits[i] = (dec % 10) + '0';
+		dec = (s32int_t) (dec / 10);
+	}
+	for (i = 9; i >= 0; i--) {
+		if (digits[i] != '0') {
+			scrn_putc(digits[i]);
+		}
+	}
 }
