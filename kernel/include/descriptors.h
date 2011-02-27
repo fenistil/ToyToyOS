@@ -1,6 +1,25 @@
 #ifndef _DESCRIPTORS_H
 #define _DESCRIPTORS_H
 
+/*
+ * IRQ Numbers and what they do by default:
+ * 0: System timer
+ * 1: Keyboard controller
+ * 2:
+ * 3: COM2
+ * 4: COM1
+ * 5: LPT 2/Sound card
+ * 6: floppy
+ * 7: LPT 1/Sound Card
+ * 9:
+ * 10:
+ * 11:
+ * 12: mouse/PS2 connector
+ * 13: math coproc, floating point unit, inter process interrupt
+ * 14: primary ATA
+ * 15: secondary ATA
+ */
+
 struct gdt_entry_struct {
 	u16int_t limit_low;
 	u16int_t base_low;
@@ -76,5 +95,23 @@ extern void isr28();
 extern void isr29();
 extern void isr30();
 extern void isr31();
+
+/* IRQ functions */
+extern void irq0();
+extern void irq1();
+extern void irq2();
+extern void irq3();
+extern void irq4();
+extern void irq5();
+extern void irq6();
+extern void irq7();
+extern void irq8();
+extern void irq9();
+extern void irq10();
+extern void irq11();
+extern void irq12();
+extern void irq13();
+extern void irq14();
+
 
 #endif

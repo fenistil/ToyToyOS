@@ -2,5 +2,5 @@
 floppya: 1_44=/home/dani/Programming/toy/floppy.img, status=inserted
 boot: a
 clock: sync=realtime
-cpu: ips=250000
+cpu: ips=200000
 

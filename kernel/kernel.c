@@ -7,8 +7,12 @@ int kmain() {
 	scrn_clear();
 	init_descriptor_tables();
 
+
 	asm volatile("int $0x3");
-	asm volatile("int $0xF");
+
+	scrn_puts("Testing IRQs\n");
+
+	//asm volatile("int $0x28");
 
 	/* infinite loop */
 	for( ;; );
