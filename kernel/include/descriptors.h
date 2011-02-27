@@ -20,6 +20,8 @@
  * 15: secondary ATA
  */
 
+#include "common.h"
+
 struct gdt_entry_struct {
 	u16int_t limit_low;
 	u16int_t base_low;
@@ -113,5 +115,13 @@ extern void irq12();
 extern void irq13();
 extern void irq14();
 
+/* structure for registering IRQ/ISRs*/
+
+#define IRQ_TIMER 32
+#define IRQ_KEYBOARD 33
+
+typedef void (* isr_t)(registers_t);
+
+void register_interrupt_handler(u8int_t n, isr_t handler);
 
 #endif

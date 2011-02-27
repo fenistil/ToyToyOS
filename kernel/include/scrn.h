@@ -1,6 +1,8 @@
 #ifndef _SCRN_H
 #define _SCRN_H
 
+#include "common.h"
+
 #define WHITE 0xF
 #define GRAY 0x7
 #define BLACK 0x0

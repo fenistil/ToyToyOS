@@ -1,6 +1,6 @@
 #BOCHS CONFIG FILE
 floppya: 1_44=/home/dani/Programming/toy/floppy.img, status=inserted
 boot: a
-clock: sync=realtime
+clock: sync=none
 cpu: ips=200000
 

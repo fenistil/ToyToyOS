@@ -15,6 +15,8 @@ gdt_ptr_t gdt_ptr;
 idt_entry_t idt_entries[256];
 idt_ptr_t idt_ptr;
 
+static isr_t interrupt_handlers[256];
+
 void init_descriptor_tables() {
 	init_gdt();
 	init_idt();
@@ -153,9 +155,6 @@ void isr_handler(registers_t regs) {
 
 void irq_handler(registers_t regs) {
 
-	scrn_put_dec(regs.int_no);
-	scrn_putc('\n');
-
 	if (regs.int_no >= 40) {
 		// reset slave
 		outb(0xA0, 0x20);
@@ -163,5 +162,12 @@ void irq_handler(registers_t regs) {
 	// always reset master PIC
 	outb(0x20, 0x20);
 
+	if(interrupt_handlers[regs.int_no] != 0) {
+		isr_t handler = interrupt_handlers[regs.int_no];
+		handler(regs);
+	}
+}
 
+void register_interrupt_handler(u8int_t n, isr_t handler) {
+	interrupt_handlers[n] = handler;
 }
