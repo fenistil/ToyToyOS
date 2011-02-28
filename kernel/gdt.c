@@ -1,0 +1,41 @@
+#include "gdt.h"
+#include "scrn.h"
+
+
+static void gdt_set_gate(s32int_t, u32int_t, u32int_t, u8int_t, u8int_t);
+
+extern void gdt_flush(u32int_t);
+
+gdt_entry_t gdt_entries[5];
+gdt_ptr_t gdt_ptr;
+
+void init_gdt() {
+	gdt_ptr.limit = (sizeof(gdt_entry_t) * 5) - 1;
+	gdt_ptr.base = (u32int_t) &gdt_entries;
+
+	gdt_set_gate(0, 0, 0, 0, 0); // Null segment
+	gdt_set_gate(1, 0, 0xFFFFFFFF, 0x9A, 0xCF); // Code segment
+	gdt_set_gate(2, 0, 0xFFFFFFFF, 0x92, 0xCF); // Data segment
+	gdt_set_gate(3, 0, 0xFFFFFFFF, 0xFA, 0xCF); // User mode code segment
+	gdt_set_gate(4, 0, 0xFFFFFFFF, 0xF2, 0xCF); // User mode data segment
+
+	gdt_flush((u32int_t) &gdt_ptr);
+
+	scrn_set_textcolor(GRAY, BLACK);
+	scrn_puts("KERNEL: Setting up GDT - OK\n");
+	scrn_set_textcolor(BLACK, WHITE);
+
+}
+
+static void gdt_set_gate(s32int_t num, u32int_t base, u32int_t limit,
+		u8int_t access, u8int_t gran) {
+	gdt_entries[num].base_low = (base & 0xFFFF);
+	gdt_entries[num].base_middle = (base >> 16) & 0xFF;
+	gdt_entries[num].base_high = (base >> 24) & 0xFF;
+
+	gdt_entries[num].limit_low = (limit & 0xFFFF);
+	gdt_entries[num].granularity = (limit >> 16) & 0x0F;
+
+	gdt_entries[num].granularity |= gran & 0xF0;
+	gdt_entries[num].access = access;
+}
