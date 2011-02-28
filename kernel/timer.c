@@ -1,5 +1,5 @@
 #include "timer.h"
-#include "descriptors.h"
+#include "idt.h"
 #include "scrn.h"
 
 u32int_t tick = 0;

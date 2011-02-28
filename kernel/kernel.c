@@ -1,5 +1,5 @@
 #include "scrn.h"
-#include "descriptors.h"
+#include "idt.h"
 #include "timer.h"
 
 int kmain() {
