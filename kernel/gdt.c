@@ -20,11 +20,6 @@ void init_gdt() {
 	gdt_set_gate(4, 0, 0xFFFFFFFF, 0xF2, 0xCF); // User mode data segment
 
 	gdt_flush((u32int_t) &gdt_ptr);
-
-//	scrn_set_textcolor(GRAY, BLACK);
-//	scrn_puts("KERNEL: Setting up GDT - OK\n");
-//	scrn_set_textcolor(BLACK, WHITE);
-
 }
 
 static void gdt_set_gate(s32int_t num, u32int_t base, u32int_t limit,

@@ -1,6 +1,6 @@
 #include "timer.h"
 #include "idt.h"
-#include "scrn.h"
+#include "klibc/printf.h"
 
 u32int_t tick = 0;
 

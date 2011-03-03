@@ -1,25 +1,27 @@
 #include "common.h"
 #include "idt.h"
-#include "scrn.h"
 #include "gdt.h"
 
 extern void idt_flush(u32int_t);
-
-static void init_idt();
-static void idt_set_gate(u8int_t, u32int_t, u16int_t, u8int_t);
-
 
 idt_entry_t idt_entries[256];
 idt_ptr_t idt_ptr;
 
 static isr_t interrupt_handlers[256];
 
-void init_descriptor_tables() {
-	init_gdt();
-	init_idt();
+void idt_set_gate(u8int_t num, u32int_t base, u16int_t sel,
+		u8int_t flags) {
+	idt_entries[num].base_lo = base & 0xFFFF;
+	idt_entries[num].base_hi = (base >> 16) & 0xFFFF;
+
+	idt_entries[num].sel = sel;
+	idt_entries[num].always0 = 0;
+	// We must uncomment the OR below when we get to using user-mode.
+	// It sets the interrupt gate's privilege level to 3.
+	idt_entries[num].flags = flags /* | 0x60 */;
 }
 
-static void init_idt() {
+void init_idt() {
 	idt_ptr.limit = sizeof(idt_entry_t) * 256 - 1;
 	idt_ptr.base = (u32int_t) &idt_entries;
 
@@ -91,32 +93,24 @@ static void init_idt() {
 	idt_set_gate(46, (u32int_t) irq14, 0x08, 0x8E);
 
 	idt_flush((u32int_t) &idt_ptr);
-
-	/*scrn_set_textcolor(GRAY, BLACK);
-	scrn_puts("\nKERNEL: Setting up IDT - OK\n");
-	scrn_set_textcolor(BLACK, WHITE);*/
 }
 
-static void idt_set_gate(u8int_t num, u32int_t base, u16int_t sel,
-		u8int_t flags) {
-	idt_entries[num].base_lo = base & 0xFFFF;
-	idt_entries[num].base_hi = (base >> 16) & 0xFFFF;
 
-	idt_entries[num].sel = sel;
-	idt_entries[num].always0 = 0;
-	// We must uncomment the OR below when we get to using user-mode.
-	// It sets the interrupt gate's privilege level to 3.
-	idt_entries[num].flags = flags /* | 0x60 */;
+void init_descriptor_tables() {
+	init_gdt();
+	init_idt();
 }
 
 void isr_handler(registers_t regs) {
-//	scrn_puts("recieved interrupt: ");
-//	scrn_put_dec(regs.int_no);
-//	scrn_putc('\n');
 	regs = regs;
 }
 
 void irq_handler(registers_t regs) {
+
+	if(interrupt_handlers[regs.int_no] != 0) {
+		isr_t handler = interrupt_handlers[regs.int_no];
+		handler(regs);
+	}
 
 	if (regs.int_no >= 40) {
 		// reset slave
@@ -124,11 +118,6 @@ void irq_handler(registers_t regs) {
 	}
 	// always reset master PIC
 	outb(0x20, 0x20);
-
-	if(interrupt_handlers[regs.int_no] != 0) {
-		isr_t handler = interrupt_handlers[regs.int_no];
-		handler(regs);
-	}
 }
 
 void register_interrupt_handler(u8int_t n, isr_t handler) {
