@@ -1,6 +1,11 @@
 #ifndef _COMMON_H
 #define _COMMON_H
 
+#ifdef NULL
+#undef NULL
+#define NULL (char*)0x0;
+#endif
+
 /* some typedefs */
 typedef unsigned int u32int_t;
 typedef int s32int_t;

@@ -92,9 +92,9 @@ static void init_idt() {
 
 	idt_flush((u32int_t) &idt_ptr);
 
-	scrn_set_textcolor(GRAY, BLACK);
+	/*scrn_set_textcolor(GRAY, BLACK);
 	scrn_puts("\nKERNEL: Setting up IDT - OK\n");
-	scrn_set_textcolor(BLACK, WHITE);
+	scrn_set_textcolor(BLACK, WHITE);*/
 }
 
 static void idt_set_gate(u8int_t num, u32int_t base, u16int_t sel,
@@ -110,9 +110,10 @@ static void idt_set_gate(u8int_t num, u32int_t base, u16int_t sel,
 }
 
 void isr_handler(registers_t regs) {
-	scrn_puts("recieved interrupt: ");
-	scrn_put_dec(regs.int_no);
-	scrn_putc('\n');
+//	scrn_puts("recieved interrupt: ");
+//	scrn_put_dec(regs.int_no);
+//	scrn_putc('\n');
+	regs = regs;
 }
 
 void irq_handler(registers_t regs) {

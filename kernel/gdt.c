@@ -21,9 +21,9 @@ void init_gdt() {
 
 	gdt_flush((u32int_t) &gdt_ptr);
 
-	scrn_set_textcolor(GRAY, BLACK);
-	scrn_puts("KERNEL: Setting up GDT - OK\n");
-	scrn_set_textcolor(BLACK, WHITE);
+//	scrn_set_textcolor(GRAY, BLACK);
+//	scrn_puts("KERNEL: Setting up GDT - OK\n");
+//	scrn_set_textcolor(BLACK, WHITE);
 
 }
 

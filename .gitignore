@@ -3,3 +3,4 @@ floppy_mount/*
 kernel/objs/*.o
 kernel/*.bin
 kernel/.*
+kernel/klibc/*.o
