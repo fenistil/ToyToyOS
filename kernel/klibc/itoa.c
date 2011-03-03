@@ -1,6 +1,7 @@
 #include "klibc/itoa.h"
+#include "klibc/_itoa.h"
 
-u32int_t itoa(s32int_t n, s8int_t * s) {
+/*u32int_t itoa(s32int_t n, s8int_t * s) {
 	int i, sign, len;
 	s8int_t c;
 	sign = n;
@@ -23,4 +24,8 @@ u32int_t itoa(s32int_t n, s8int_t * s) {
 
 	return len;
 
+}*/
+
+u32int_t itoa(s32int_t n, s8int_t * s) {
+	return _itoa(n, s, 'd');
 }

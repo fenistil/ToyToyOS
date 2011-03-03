@@ -5,6 +5,7 @@ OBJ_DIR=objs/
 CSOURCES=$(wildcard *.c)
 OBJS=$(addprefix $(OBJ_DIR), $(subst .c,.o,$(CSOURCES))) drivers/keyboard.o
 
+.PHONY: all
 all: kernel.bin
 
 kernel.bin: $(OBJS) boot.o gdt_s.o idt_s.o drivers klibc klibc/klibc.o
@@ -24,7 +25,8 @@ gdt_s.o: gdt_s.s
 	
 drivers:
 	`cd keyboard && make && cd ..`
-	
+
+.PHONY:klibc/klibc.o 	
 klibc/klibc.o:
 	$(MAKE) -C klibc 
 	

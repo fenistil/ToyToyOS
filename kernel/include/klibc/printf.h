@@ -3,7 +3,13 @@
 
 #include "common.h"
 #include "klibc/stdarg.h"
+#include "klibc/strlen.h"
+#include "klibc/strcpy.h"
+#include "klibc/putchar.h"
+#include "klibc/itoa.h"
+#include "klibc/_itoa.h"
+#include "klibc/strcpy.h"
 
-int printf(const s8int_t * fmt, ...);
+s32int_t printf(const s8int_t *, ...);
 
 #endif

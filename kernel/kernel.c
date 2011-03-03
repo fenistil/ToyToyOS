@@ -40,24 +40,28 @@ typedef struct multiboot_info {
 
 int kmain(u32int_t magic, u32int_t addr) {
 	multiboot_info_t *mbi;
-	int k = 123456;
+	int k = -12345;
 	s8int_t s[7];
 	if (magic != 0x2BADB002) {
-//		scrn_puts("Fucked up magic number! Halting");
+		//		scrn_puts("Fucked up magic number! Halting");
 		for (;;)
 			;
 	}
 
 	mbi = (multiboot_info_t *) addr;
 
-	scrn_init();
-	scrn_clear();
-	putchar('H');
-	itoa(k, s);
-	addr = addr;
 	//issue break every 10ms
 	init_timer(100);
 	init_descriptor_tables();
+
+	scrn_init();
+	scrn_clear();
+	putchar('H');
+	putchar('e');
+	itoa(k, s);
+	addr = addr;
+	printf("\nNegativ hex: %x", k);
+	printf("\nMagic number: %x", magic);
 
 	//asm volatile("int $0x28");
 
