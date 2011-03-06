@@ -50,7 +50,7 @@ int kmain(u32int_t magic, u32int_t addr) {
 	scrn_init();
 	scrn_clear();
 	//issue break every 20ms
-	init_timer(50);
+	//init_timer(50);
 	init_descriptor_tables();
 	printf("Descriptor tables have been initialized...\n");
 

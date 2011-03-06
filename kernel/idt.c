@@ -22,10 +22,18 @@ void idt_set_gate(u8int_t num, u32int_t base, u16int_t sel,
 }
 
 void init_idt() {
+	int i;
+
 	idt_ptr.limit = sizeof(idt_entry_t) * 256 - 1;
 	idt_ptr.base = (u32int_t) &idt_entries;
 
-	kmemsetww((u32int_t *) &idt_entries, 0, sizeof(idt_entry_t) * 256);
+	for (i = 0; i < 256; i++){
+		idt_entries[i].always0 = 0;
+		idt_entries[i].base_hi = 0;
+		idt_entries[i].base_lo = 0;
+		idt_entries[i].flags = 0;
+		idt_entries[i].sel = 0;
+	}
 
 	/* register IDTs */
 
@@ -106,18 +114,16 @@ void isr_handler(registers_t regs) {
 }
 
 void irq_handler(registers_t regs) {
-
-	if(interrupt_handlers[regs.int_no] != 0) {
-		isr_t handler = interrupt_handlers[regs.int_no];
-		handler(regs);
-	}
-
 	if (regs.int_no >= 40) {
 		// reset slave
 		outb(0xA0, 0x20);
 	}
 	// always reset master PIC
 	outb(0x20, 0x20);
+	if(interrupt_handlers[regs.int_no] != 0) {
+		isr_t handler = interrupt_handlers[regs.int_no];
+		handler(regs);
+	}
 }
 
 void register_interrupt_handler(u8int_t n, isr_t handler) {
